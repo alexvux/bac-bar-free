@@ -6,6 +6,12 @@ Bạn vào vai **bác Năm**, bảo vệ 59 tuổi, còn đúng **5 ca trực** 
 trường học → ngân hàng → bệnh viện → tòa tháp → quay về trường trong đêm bão.
 Các ca nối với nhau bằng một vụ án cũ: vụ mất quỹ xây trường năm 2006 mà ông Tư, người bảo vệ cũ, bị đổ oan.
 
+## Chơi online
+
+https://alexvux.github.io/bac-bar-free/
+
+Mỗi lần đẩy lên `main`, GitHub Actions build bản tĩnh và deploy lên GitHub Pages. Không cần bật máy hay Cloudflare tunnel.
+
 ## Cài Bun
 
 - macOS / Linux: `curl -fsSL https://bun.sh/install | bash`
