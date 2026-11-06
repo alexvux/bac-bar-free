@@ -6,12 +6,12 @@ Nhánh: `game/five-shifts` · PR: (chưa mở)
 - [x] 01 Khung dự án: Bun + Three.js, README tiếng Việt, thư mục tiến độ
 - [x] 02 Di chuyển góc nhìn thứ nhất, camera, bàn phím + cảm ứng
 - [x] 03 Hệ thống chung: hội thoại, kiểm tra giấy tờ, đuổi bắt, lưu game, tạm dừng, âm thanh cơ bản
+- [x] 04 Ca 1: Trường học
 
 ## Đang làm
-- [ ] 04 Ca 1: Trường học (đã chạy thử tự động hết ca)
+- [ ] 05 Ca 2: Ngân hàng
 
 ## Tiếp theo
-- [ ] 05 Ca 2: Ngân hàng
 - [ ] 06 Ca 3: Bệnh viện
 - [ ] 07 Ca 4: Tòa tháp
 - [ ] 08 Ca 5: Trường học đêm bão + 3 kết thúc
