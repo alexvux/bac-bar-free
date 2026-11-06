@@ -13,7 +13,7 @@ Nhánh: `game/five-shifts` · PR: https://github.com/alexvux/bac-bar-free/pull/1
 - [x] 08 Ca 5: Trường học đêm bão + 3 kết thúc
 - [x] 09 Âm thanh, hoàn thiện, điện thoại
 - [x] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình (cả 3 kết thúc)
-- [ ] 11 Deploy GitHub Pages (PR `deploy/github-pages`)
+- [x] 11 Deploy GitHub Pages (PR #2 đã merge; source: GitHub Actions)
 
 ## Đã lên GitHub
 - [x] Đẩy nhánh `game/five-shifts` và mở PR #1
