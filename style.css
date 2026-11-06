@@ -1,0 +1,97 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0d0f14; color: #f2ede4;
+  font-family: system-ui, "Noto Sans", "Segoe UI", sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
+canvas { display: block; }
+#ui { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+#stamina { position: fixed; left: 20px; bottom: 20px; width: 180px; height: 10px; background: #0008; border: 1px solid #fff4; border-radius: 6px; overflow: hidden; }
+#stamina div { height: 100%; width: 100%; background: linear-gradient(90deg, #d9a441, #f0d27a); }
+
+/* touch controls */
+#touch { display: none; }
+body.touch.playing #touch { display: block; }
+#joy { position: fixed; left: 28px; bottom: 48px; width: 130px; height: 130px; border-radius: 50%; background: #ffffff18; border: 2px solid #ffffff40; touch-action: none; z-index: 5; }
+#joyKnob { position: absolute; left: 40px; top: 40px; width: 50px; height: 50px; border-radius: 50%; background: #ffffff70; }
+#lookPad { position: fixed; right: 0; top: 0; width: 55%; height: 100%; touch-action: none; z-index: 4; }
+.tbtn { position: fixed; z-index: 6; width: 76px; height: 76px; border-radius: 50%; border: 2px solid #fff6; background: #0007; color: #fff; font-size: 20px; font-weight: 700; touch-action: none; }
+#btnAct { right: 28px; bottom: 120px; }
+#btnRun { right: 116px; bottom: 44px; font-size: 15px; }
+#btnRun.on { background: #d9a441aa; }
+body.touch #stamina { bottom: auto; top: 84px; left: 20px; width: 130px; }
+
+/* HUD */
+#hud, #retire, #compass, #cross, #stamina, #btnPause, #timer { display: none; }
+body.playing #hud, body.playing #retire, body.playing #compass, body.playing #cross, body.playing #stamina, body.playing #btnPause, body.playing #timer { display: block; }
+#hud { position: fixed; left: 20px; top: 16px; max-width: 46vw; text-shadow: 0 1px 3px #000; }
+#shiftName { font-size: 13px; letter-spacing: .04em; opacity: .8; text-transform: uppercase; }
+#objective { margin-top: 6px; font-size: 18px; font-weight: 600; color: #ffe08a; }
+#retire { position: fixed; right: 76px; top: 18px; padding: 6px 12px; background: #0008; border-radius: 20px; font-size: 13px; color: #f6d28b; }
+#compass { position: fixed; left: 50%; top: 14px; transform: translateX(-50%); text-align: center; text-shadow: 0 1px 3px #000; transition: opacity .3s; }
+#arrow { font-size: 26px; color: #ffe08a; display: inline-block; }
+#dist { display: block; font-size: 12px; opacity: .8; }
+#cross { position: fixed; left: 50%; top: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: #fff9; }
+#prompt { position: fixed; left: 50%; bottom: 22%; transform: translateX(-50%); padding: 8px 16px; background: #000a; border-radius: 6px; font-size: 18px; opacity: 0; transition: opacity .2s; }
+#timer { position: fixed; left: 50%; top: 64px; transform: translateX(-50%); font-size: 20px; font-weight: 700; color: #ff8a6a; text-shadow: 0 1px 3px #000; }
+#toast { position: fixed; left: 50%; top: 30%; transform: translate(-50%, -10px); padding: 10px 18px; background: #000c; border-left: 3px solid #ffe08a; border-radius: 4px; font-size: 17px; opacity: 0; transition: all .3s; max-width: 80vw; text-align: center; }
+#toast.on { opacity: 1; transform: translate(-50%, 0); }
+#stamina.tired div { background: #c0504d; }
+#flash { position: fixed; inset: 0; opacity: 0; pointer-events: none; }
+.pausebtn { position: fixed; right: 16px; top: 12px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #fff5; background: #0008; color: #fff; font-weight: 700; pointer-events: auto; z-index: 7; }
+
+/* dialogue */
+#dialogue { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); width: min(820px, 94vw); padding: 16px 22px 12px;
+  background: linear-gradient(#141821ee, #0d1017f5); border: 1px solid #ffffff25; border-top: 3px solid #d9a441; border-radius: 8px; display: none; pointer-events: auto; z-index: 8; }
+#dialogue.on { display: block; }
+#dlgName { color: #f0c060; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+#dlgText { font-size: 19px; line-height: 1.5; }
+#dlgChoices { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.choice { text-align: left; padding: 10px 14px; font-size: 17px; background: #ffffff10; color: #fff; border: 1px solid #ffffff30; border-radius: 6px; cursor: pointer; }
+.choice:hover { background: #d9a44133; }
+.choice b, .cardbtns b, .idbtns b { display: inline-block; min-width: 22px; color: #f0c060; }
+#dlgHint { font-size: 12px; opacity: .5; text-align: right; margin-top: 6px; }
+
+/* ID check */
+#idcheck { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: #0009; pointer-events: auto; z-index: 9; }
+#idcheck.on { display: flex; }
+.idwrap { width: min(760px, 96vw); background: #1b1f27; border-radius: 10px; padding: 16px; border: 1px solid #ffffff22; }
+.idrules { background: #2b2f1d; border-left: 3px solid #d9a441; padding: 8px 12px; border-radius: 4px; font-size: 14px; }
+.idrules ul { margin: 4px 0 0; padding-left: 18px; }
+.idrow { display: flex; gap: 16px; margin: 14px 0; flex-wrap: wrap; }
+.idcard { flex: 1.6; min-width: 280px; background: #efe6cf; color: #222; border-radius: 8px; padding: 10px 12px; position: relative; font-size: 15px; }
+.idtitle { font-weight: 800; color: #9c3b2a; letter-spacing: .05em; margin-bottom: 8px; }
+.idbody { display: flex; gap: 12px; }
+.idbody canvas, .idreal canvas { border-radius: 4px; border: 1px solid #0003; }
+.idcard td { padding: 2px 6px 2px 0; vertical-align: top; }
+.idcard td:first-child { color: #6a5f4a; white-space: nowrap; }
+.stamp { position: absolute; right: 12px; bottom: 8px; transform: rotate(-12deg); border: 2px solid #c0302a; color: #c0302a; padding: 2px 8px; border-radius: 50%; font-size: 11px; font-weight: 800; opacity: .85; }
+.stamp.black { border-color: #333; color: #333; }
+.nostamp { position: absolute; right: 12px; bottom: 8px; font-size: 12px; color: #8a7a60; font-style: italic; }
+.idperson { flex: 1; min-width: 180px; text-align: center; }
+.idlabel { font-size: 13px; opacity: .7; margin-bottom: 6px; }
+.idsays { margin-top: 8px; font-style: italic; color: #ddd; font-size: 15px; }
+.idbtns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.idbtns button, .cardbtns button { padding: 12px 22px; font-size: 17px; border-radius: 6px; border: 1px solid #ffffff40; background: #ffffff14; color: #fff; cursor: pointer; min-width: 150px; }
+.idbtns .ok { background: #2f6b3f; } .idbtns .no { background: #7a2e2a; }
+.idbtns button:disabled { opacity: .4; }
+
+/* full-screen cards */
+#card { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; pointer-events: auto; z-index: 10; background: #07090dd8; }
+#card.on { display: flex; }
+#card.title { background: linear-gradient(180deg, #0b0f18aa, #0b0f18ee 70%); }
+.cardin { width: min(640px, 92vw); text-align: center; }
+#card .kicker { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #d9a441; }
+#card h1 { font-size: clamp(30px, 6vw, 52px); margin: 10px 0 14px; font-weight: 800; }
+#card.title h1 { font-size: clamp(44px, 9vw, 84px); letter-spacing: .02em; color: #ffe08a; text-shadow: 0 4px 20px #000; }
+.cardbody { font-size: 17px; line-height: 1.6; text-align: left; color: #e6e0d4; }
+#card.title .cardbody, #card.ending .cardbody p:first-child { text-align: center; }
+.cardbody .sub { font-size: 19px; text-align: center; }
+.cardbody .muted, .muted { opacity: .6; font-size: 14px; text-align: center; }
+.cardbtns { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 22px; }
+.cardbtns button { min-width: 260px; }
+.cardbtns button:hover { background: #d9a44144; }
+.help { text-align: left; } .help li { margin: 6px 0; }
+#card.ending-truth { background: radial-gradient(circle at 50% 30%, #6a5320ee, #0b0f18f5); }
+#card.ending-quiet { background: radial-gradient(circle at 50% 30%, #2c3e50ee, #0b0f18f5); }
+#card.ending-storm { background: radial-gradient(circle at 50% 30%, #3a1414ee, #050608f8); }
+#card.summary .cardbody p { margin: 6px 0; }
+@media (max-width: 700px) { #objective { font-size: 15px; } #dlgText { font-size: 16px; } .cardbody { font-size: 15px; } #hud { max-width: 60vw; } }
+button { font-family: inherit; }
