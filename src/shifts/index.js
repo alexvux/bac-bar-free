@@ -1,3 +1,4 @@
 import { ca1 } from "./school.js";
 import { ca2 } from "./bank.js";
-export const SHIFTS = [ca1, ca2];
+import { ca3 } from "./hospital.js";
+export const SHIFTS = [ca1, ca2, ca3];

@@ -8,12 +8,12 @@ Nhánh: `game/five-shifts` · PR: (chưa mở)
 - [x] 03 Hệ thống chung: hội thoại, kiểm tra giấy tờ, đuổi bắt, lưu game, tạm dừng, âm thanh cơ bản
 - [x] 04 Ca 1: Trường học
 - [x] 05 Ca 2: Ngân hàng
+- [x] 06 Ca 3: Bệnh viện
 
 ## Đang làm
-- [ ] 06 Ca 3: Bệnh viện
+- [ ] 07 Ca 4: Tòa tháp
 
 ## Tiếp theo
-- [ ] 07 Ca 4: Tòa tháp
 - [ ] 08 Ca 5: Trường học đêm bão + 3 kết thúc
 - [ ] 09 Âm thanh, hoàn thiện, điện thoại
 - [ ] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình
