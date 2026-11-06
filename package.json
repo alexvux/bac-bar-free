@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "bun --port=5173 ./index.html",
     "build": "bun build ./index.html --outdir=dist --minify",
-    "start": "bun run build && bun serve.js"
+    "start": "bun run build && bun serve.js",
+    "choi-thu": "bun tools/choi-thu.mjs"
   },
   "dependencies": {
     "three": "^0.187.0"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.0"
   }
 }

@@ -11,11 +11,9 @@ Nhánh: `game/five-shifts` · PR: (chưa mở)
 - [x] 06 Ca 3: Bệnh viện
 - [x] 07 Ca 4: Tòa tháp
 - [x] 08 Ca 5: Trường học đêm bão + 3 kết thúc
+- [x] 09 Âm thanh, hoàn thiện, điện thoại
 
 ## Đang làm
-- [ ] 09 Âm thanh, hoàn thiện, điện thoại
-
-## Tiếp theo
 - [ ] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình
 
 ## Cách chạy

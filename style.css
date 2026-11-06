@@ -2,13 +2,13 @@
 html, body { margin: 0; height: 100%; overflow: hidden; background: #0d0f14; color: #f2ede4;
   font-family: system-ui, "Noto Sans", "Segoe UI", sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
 canvas { display: block; }
-#ui { position: fixed; inset: 0; pointer-events: none; }
+#ui { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
 #stamina { position: fixed; left: 20px; bottom: 20px; width: 180px; height: 10px; background: #0008; border: 1px solid #fff4; border-radius: 6px; overflow: hidden; }
 #stamina div { height: 100%; width: 100%; background: linear-gradient(90deg, #d9a441, #f0d27a); }
 
 /* touch controls */
 #touch { display: none; }
-body.touch #touch { display: block; }
+body.touch.playing #touch { display: block; }
 #joy { position: fixed; left: 28px; bottom: 48px; width: 130px; height: 130px; border-radius: 50%; background: #ffffff18; border: 2px solid #ffffff40; touch-action: none; z-index: 5; }
 #joyKnob { position: absolute; left: 40px; top: 40px; width: 50px; height: 50px; border-radius: 50%; background: #ffffff70; }
 #lookPad { position: fixed; right: 0; top: 0; width: 55%; height: 100%; touch-action: none; z-index: 4; }
@@ -16,7 +16,7 @@ body.touch #touch { display: block; }
 #btnAct { right: 28px; bottom: 120px; }
 #btnRun { right: 116px; bottom: 44px; font-size: 15px; }
 #btnRun.on { background: #d9a441aa; }
-body.touch #stamina { bottom: 190px; left: 28px; width: 130px; }
+body.touch #stamina { bottom: auto; top: 84px; left: 20px; width: 130px; }
 
 /* HUD */
 #hud, #retire, #compass, #cross, #stamina, #btnPause, #timer { display: none; }

@@ -153,7 +153,7 @@ async function pause() {
       buttons: ["Tiếp tục", audio.muted ? "Bật âm thanh" : "Tắt âm thanh", "Về màn hình chính"],
     });
     if (i === 1) { audio.setMuted(!audio.muted); continue; }
-    if (i === 2) { location.reload(); return; }
+    if (i === 2) { location.href = location.pathname + (location.search.includes("touch") ? "?touch" : ""); return; }
     break;
   }
   state.mode = "play";
@@ -276,6 +276,7 @@ async function campaign(from) {
   for (let i = from; i < SHIFTS.length; i++) {
     const result = await playShift(i);
     if (i < SHIFTS.length - 1) {
+      audio.good();
       await ui.card({ kicker: `Hết ca ${i + 1}`, title: SHIFTS[i].doneTitle, body: summary(), buttons: ["Ca tiếp theo"], cls: "summary" });
     } else {
       await showEnding(result);
@@ -301,7 +302,7 @@ async function showEnding(id) {
   localStorage.setItem("bac-bao-ve-endings", JSON.stringify([...new Set([...seenEndings(), id])]));
   audio.ending(id);
   await ui.card({ kicker: `Kết thúc ${E.n}/3`, title: E.title, body: E.body + summary().replace(/<p class="muted">.*<\/p>/, ""), buttons: ["Về màn hình chính"], cls: "ending ending-" + id });
-  location.reload();
+  location.href = location.pathname + (location.search.includes("touch") ? "?touch" : "");
 }
 
 function seenEndings() {

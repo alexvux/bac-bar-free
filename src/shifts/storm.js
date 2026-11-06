@@ -140,7 +140,7 @@ export const ca5 = {
     ]);
     c.objective("Bắt kẻ phóng hỏa trước khi lửa lan!");
     const caught = await c.chase({
-      npc: hung, name: "Kẻ phóng hỏa", speed: h.tuan ? 4.2 : 4.7, time: 38 + bonus, headStart: 1.0, stunText: "Hắn hất can xăng vào bác!",
+      npc: hung, name: "Kẻ phóng hỏa", speed: h.tuan ? 4.4 : 4.9, time: 38 + bonus, headStart: 1.4, stunText: "Hắn hất can xăng vào bác!",
       path: [[-6.8, -5.5], [7, -5.5], [7, 6.5], [-6.5, 6.5]], loopFrom: 0,
     });
     if (!caught) {

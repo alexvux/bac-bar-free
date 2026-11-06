@@ -57,7 +57,7 @@ export function buildTouchControls(root) {
   const joy = wrap.querySelector("#joy"), knob = wrap.querySelector("#joyKnob");
   let joyId = null, cx = 0, cy = 0;
   joy.addEventListener("pointerdown", (e) => {
-    joyId = e.pointerId; joy.setPointerCapture(e.pointerId);
+    joyId = e.pointerId; try { joy.setPointerCapture(e.pointerId); } catch {}
     const r = joy.getBoundingClientRect(); cx = r.left + r.width / 2; cy = r.top + r.height / 2;
     moveJoy(e);
   });
@@ -75,7 +75,7 @@ export function buildTouchControls(root) {
 
   const pad = wrap.querySelector("#lookPad");
   let lookId = null, lx = 0, ly = 0;
-  pad.addEventListener("pointerdown", (e) => { lookId = e.pointerId; pad.setPointerCapture(e.pointerId); lx = e.clientX; ly = e.clientY; });
+  pad.addEventListener("pointerdown", (e) => { lookId = e.pointerId; try { pad.setPointerCapture(e.pointerId); } catch {} lx = e.clientX; ly = e.clientY; });
   pad.addEventListener("pointermove", (e) => {
     if (e.pointerId !== lookId) return;
     input.lookDX += (e.clientX - lx) * 2.2; input.lookDY += (e.clientY - ly) * 2.2;
