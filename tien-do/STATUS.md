@@ -1,6 +1,6 @@
 # Trạng thái
 
-Nhánh: `game/five-shifts` · PR: (chưa mở — chưa đẩy được lên GitHub)
+Nhánh: `game/five-shifts` · PR: https://github.com/alexvux/bac-bar-free/pull/1
 
 ## Đã xong
 - [x] 01 Khung dự án: Bun + Three.js, README tiếng Việt, thư mục tiến độ
@@ -14,8 +14,8 @@ Nhánh: `game/five-shifts` · PR: (chưa mở — chưa đẩy được lên Git
 - [x] 09 Âm thanh, hoàn thiện, điện thoại
 - [x] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình (cả 3 kết thúc)
 
-## Đang chờ
-- [ ] Đẩy nhánh `game/five-shifts` lên GitHub và mở PR (token GitHub trên máy chưa được cấp quyền với repo private mới này)
+## Đã lên GitHub
+- [x] Đẩy nhánh `game/five-shifts` và mở PR #1
 
 ## Kết thúc đã chơi thử
 1. Trả lại tên cho ông Tư
