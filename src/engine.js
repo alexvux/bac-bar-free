@@ -66,6 +66,15 @@ export function cyl(x, y, z, r, h, color, { solid = true, seg = 8, parent = null
   return m;
 }
 
+// Invisible walls around the playable area.
+export function bounds(minX, maxX, minZ, maxZ) {
+  const t = 1;
+  colliders.push({ minX: minX - t, maxX: maxX + t, minZ: minZ - t, maxZ: minZ });
+  colliders.push({ minX: minX - t, maxX: maxX + t, minZ: maxZ, maxZ: maxZ + t });
+  colliders.push({ minX: minX - t, maxX: minX, minZ, maxZ });
+  colliders.push({ minX: maxX, maxX: maxX + t, minZ, maxZ });
+}
+
 export function removeCollider(mesh) {
   const i = colliders.findIndex((c) => c.mesh === mesh);
   if (i >= 0) colliders.splice(i, 1);
@@ -143,8 +152,9 @@ export function sign(text, x, y, z, rotY = 0, { w = 2.4, h = 0.6, bg = "#1d3b6a"
 }
 
 // Low-poly person. Returns a group with .parts for simple walk animation.
-export function person({ shirt = 0x3366aa, pants = 0x333344, skin = 0xd9a77c, hair = 0x1a1a1a, hat = null, glasses = false, height = 1, name = "" } = {}) {
+export function person({ shirt = 0x3366aa, pants = 0x333344, skin = 0xd9a77c, hair = 0x1a1a1a, hairStyle = "short", hat = null, glasses = false, mustache = false, height = 1, name = "" } = {}) {
   const g = new THREE.Group();
+  if (hairStyle === "bald") hair = skin;
   const legL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.8, 0.2), mat(pants));
   const legR = legL.clone();
   legL.position.set(-0.11, 0.4, 0); legR.position.set(0.11, 0.4, 0);
@@ -160,6 +170,14 @@ export function person({ shirt = 0x3366aa, pants = 0x333344, skin = 0xd9a77c, ha
   const hairM = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.1, 0.32), mat(hair));
   hairM.position.y = 1.82;
   g.add(legL, legR, body, armL, armR, head, hairM);
+  if (hairStyle === "long") {
+    const back = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.45, 0.08), mat(hair));
+    back.position.set(0, 1.58, -0.17); g.add(back);
+  }
+  if (mustache) {
+    const mu = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.04, 0.02), mat(hair));
+    mu.position.set(0, 1.55, 0.155); g.add(mu);
+  }
   if (hat) {
     const h = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.22, 0.12, 8), mat(hat));
     h.position.y = 1.9; g.add(h);
