@@ -145,7 +145,7 @@ export function idCheck(doc) {
             <div class="idbody"><div class="idphoto"></div>
               <table>${doc.fields.map(([l, v]) => `<tr><td>${esc(l)}</td><td><b>${esc(v)}</b></td></tr>`).join("")}</table>
             </div>
-            ${doc.stamp ? `<div class="stamp">${esc(doc.stamp)}</div>` : `<div class="nostamp">(không có dấu)</div>`}
+            ${doc.stamp ? `<div class="stamp ${doc.stampBlack ? "black" : ""}">${esc(doc.stamp)}</div>` : `<div class="nostamp">(không có dấu)</div>`}
           </div>
           <div class="idperson"><div class="idlabel">Người trước mặt</div><div class="idreal"></div>
             <div class="idsays">“${esc(doc.says)}”</div></div>

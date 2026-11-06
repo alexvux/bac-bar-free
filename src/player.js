@@ -10,6 +10,7 @@ export const player = {
   bob: 0,
   radius: 0.35,
   frozen: false,
+  drainMul: 1, // < 1 drains stamina slower (cô Thảo's cao dán in ca 5)
   onStep: null,
   stepAcc: 0,
 };
@@ -47,7 +48,7 @@ export function updatePlayer(dt) {
   const wantSprint = (k.has("ShiftLeft") || k.has("ShiftRight") || input.touchSprint) && moving && fz > 0;
   const sprinting = wantSprint && !player.tired && player.stamina > 0;
   if (sprinting) {
-    player.stamina -= dt / 3.2;
+    player.stamina -= (dt / 3.2) * player.drainMul;
     if (player.stamina <= 0) { player.stamina = 0; player.tired = true; }
   } else {
     player.stamina = Math.min(1, player.stamina + dt / (player.tired ? 5 : 3.5));

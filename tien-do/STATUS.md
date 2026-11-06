@@ -9,12 +9,12 @@ Nhánh: `game/five-shifts` · PR: (chưa mở)
 - [x] 04 Ca 1: Trường học
 - [x] 05 Ca 2: Ngân hàng
 - [x] 06 Ca 3: Bệnh viện
+- [x] 07 Ca 4: Tòa tháp
 
 ## Đang làm
-- [ ] 07 Ca 4: Tòa tháp
+- [ ] 08 Ca 5: Trường học đêm bão + 3 kết thúc
 
 ## Tiếp theo
-- [ ] 08 Ca 5: Trường học đêm bão + 3 kết thúc
 - [ ] 09 Âm thanh, hoàn thiện, điện thoại
 - [ ] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình
 

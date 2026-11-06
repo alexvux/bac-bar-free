@@ -37,7 +37,7 @@ export const ctx = {
     const allowed = await ui.idCheck(doc);
     const correct = allowed === !doc.invalid;
     if (allowed) audio.stamp(); else audio.deny();
-    if (!correct) state.flags.mistakes++;
+    if (!correct && !doc.moral) state.flags.mistakes++;
     return { allowed, correct };
   },
   objective(text, x = null, z = null) {
@@ -243,6 +243,7 @@ function endChase(caught) {
 /* ---------- shift sequencing ---------- */
 function resetLevel() {
   ctx.flashlight(false);
+  player.drainMul = 1;
   state.waiters = []; state.updaters = []; state.npcs = []; state.interactables = []; state.chase = null; state.target = null;
   ui.setTimer(""); ui.setPrompt(""); ui.setObjective("");
   clearLevel();
