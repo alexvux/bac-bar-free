@@ -20,6 +20,7 @@ const state = {
   interactables: [], // { x, z, r, label, resolve }
   chase: null,
   flashlight: null,
+  stun: 0,
   orbit: 0,
 };
 window.__game = { state, player, colliders };
@@ -66,9 +67,10 @@ export const ctx = {
   onUpdate(fn) { state.updaters.push(fn); },
   /* Chase: the runner follows `path`, then loops from index `loopFrom`. Catch them within `time` seconds.
      Resolves true when caught. */
-  chase({ npc, path, loopFrom = 0, speed = 4.4, time = 60, name = "Kẻ gian" }) {
+  chase({ npc, path, loopFrom = 0, speed = 4.4, time = 60, name = "Kẻ gian", headStart = 1.2, stunText = "Hắn xô bác loạng choạng!" }) {
     audio.whistle();
-    ui.toast("Đuổi theo! Giữ Shift để chạy.");
+    state.stun = headStart;
+    ui.toast(headStart > 0 ? `${stunText} Đuổi theo! Giữ Shift để chạy.` : "Đuổi theo! Giữ Shift để chạy.");
     return new Promise((resolve) => {
       state.chase = { npc, path, loopFrom, i: 0, speed, t: time, stumble: 4 + Math.random() * 2, down: 0, name, resolve };
       state.target = { x: npc.position.x, z: npc.position.z, follow: npc };
@@ -165,7 +167,8 @@ renderer.setAnimationLoop((ts) => {
   const dt = Math.min(timer.getDelta(), 0.05);
   elapsed += dt;
   const playing = state.mode === "play" && !ui.modalActive();
-  player.frozen = !playing;
+  if (state.stun > 0 && playing) state.stun -= dt;
+  player.frozen = !playing || state.stun > 0;
   if (state.mode === "title") {
     state.orbit += dt * 0.08;
     camera.position.set(Math.sin(state.orbit) * 18, 7, Math.cos(state.orbit) * 18 + 4);
@@ -305,6 +308,9 @@ function seenEndings() {
 }
 
 export async function titleScreen() {
+  // ?ca=N jumps straight to shift N with fresh flags (for testing a single shift).
+  const jump = +new URLSearchParams(location.search).get("ca");
+  if (jump >= 1 && jump <= SHIFTS.length) { state.flags = freshFlags(); return campaign(jump - 1); }
   resetLevel();
   SHIFTS[0].build(ctx);
   state.mode = "title";

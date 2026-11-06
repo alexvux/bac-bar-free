@@ -7,12 +7,12 @@ Nhánh: `game/five-shifts` · PR: (chưa mở)
 - [x] 02 Di chuyển góc nhìn thứ nhất, camera, bàn phím + cảm ứng
 - [x] 03 Hệ thống chung: hội thoại, kiểm tra giấy tờ, đuổi bắt, lưu game, tạm dừng, âm thanh cơ bản
 - [x] 04 Ca 1: Trường học
+- [x] 05 Ca 2: Ngân hàng
 
 ## Đang làm
-- [ ] 05 Ca 2: Ngân hàng
+- [ ] 06 Ca 3: Bệnh viện
 
 ## Tiếp theo
-- [ ] 06 Ca 3: Bệnh viện
 - [ ] 07 Ca 4: Tòa tháp
 - [ ] 08 Ca 5: Trường học đêm bão + 3 kết thúc
 - [ ] 09 Âm thanh, hoàn thiện, điện thoại
