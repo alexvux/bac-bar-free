@@ -1,0 +1,14 @@
+{
+  "name": "bac-bar-free",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun --port=5173 ./index.html",
+    "build": "bun build ./index.html --outdir=dist --minify",
+    "start": "bun run build && bun serve.js"
+  },
+  "dependencies": {
+    "three": "^0.187.0"
+  }
+}
