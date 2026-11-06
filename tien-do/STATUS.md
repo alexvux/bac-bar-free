@@ -1,6 +1,6 @@
 # Trạng thái
 
-Nhánh: `game/five-shifts` · PR: (chưa mở)
+Nhánh: `game/five-shifts` · PR: (chưa mở — chưa đẩy được lên GitHub)
 
 ## Đã xong
 - [x] 01 Khung dự án: Bun + Three.js, README tiếng Việt, thư mục tiến độ
@@ -12,9 +12,15 @@ Nhánh: `game/five-shifts` · PR: (chưa mở)
 - [x] 07 Ca 4: Tòa tháp
 - [x] 08 Ca 5: Trường học đêm bão + 3 kết thúc
 - [x] 09 Âm thanh, hoàn thiện, điện thoại
+- [x] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình (cả 3 kết thúc)
 
-## Đang làm
-- [ ] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình
+## Đang chờ
+- [ ] Đẩy nhánh `game/five-shifts` lên GitHub và mở PR (token GitHub trên máy chưa được cấp quyền với repo private mới này)
+
+## Kết thúc đã chơi thử
+1. Trả lại tên cho ông Tư
+2. Về hưu lặng lẽ
+3. Đêm bão không tắt
 
 ## Cách chạy
 ```bash

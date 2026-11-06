@@ -16,7 +16,7 @@ export const ca2 = {
   build() {
     lights({ sky: 0xdfe8f0, ground: 0x777777, hemi: 1.0, sun: 1.2, bg: 0xbfd6e8, fog: [0xbfd6e8, 30, 70] });
     floor(0, 6, 60, 50, 0x55585c); // parking
-    floor(0, 0, 22, 16, 0xd8d4cc); // lobby
+    floor(0, 0, 22, 16, 0xd8d4cc, 0.01); // lobby
     bounds(-14, 14, -8, 21);
     room(0, 0, 22, 16, 4.2, 0xeeeae2, { s: [0, 3] });
     box(0, 4.2, 0, 22.4, 0.3, 16.4, 0xcfc9bd, { solid: false, shadow: false });

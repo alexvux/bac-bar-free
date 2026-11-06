@@ -80,10 +80,11 @@ export function removeCollider(mesh) {
   if (i >= 0) colliders.splice(i, 1);
 }
 
-export function floor(x, z, w, d, color) {
+// `y` lifts overlapping floors (lobby on top of a car park) so they do not z-fight.
+export function floor(x, z, w, d, color, y = 0) {
   const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), mat(color));
   m.rotation.x = -Math.PI / 2;
-  m.position.set(x, 0, z);
+  m.position.set(x, y, z);
   m.receiveShadow = true;
   level.add(m);
   return m;

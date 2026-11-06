@@ -12,8 +12,8 @@ export function buildSchool({ night = false } = {}) {
   else lights({ sky: 0xffd9a8, ground: 0x6a5a40, hemi: 1.1, sun: 1.3, sunColor: 0xffc890, bg: 0xf2b88a, fog: [0xf2b88a, 30, 80] });
   floor(0, 0, 80, 80, night ? 0x2a3326 : 0x7d8f56);
   bounds(-14, 14, -14, 21);
-  floor(0, 1, 26, 22, night ? 0x3a3a3e : 0xb9ad94); // sân trường
-  floor(0, 18, 80, 10, night ? 0x202024 : 0x4a4a4e); // đường
+  floor(0, 1, 26, 22, night ? 0x3a3a3e : 0xb9ad94, 0.01); // sân trường
+  floor(0, 18, 80, 10, night ? 0x202024 : 0x4a4a4e, 0.005); // đường
   // main classroom block (yellow, like many Vietnamese schools)
   const wall = night ? 0x8a7a40 : 0xf0c94a;
   box(0, 0, -12, 28, 6.5, 5, wall);
