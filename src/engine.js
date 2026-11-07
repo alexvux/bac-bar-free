@@ -152,44 +152,91 @@ export function sign(text, x, y, z, rotY = 0, { w = 2.4, h = 0.6, bg = "#1d3b6a"
   return m;
 }
 
-// Low-poly person. Returns a group with .parts for simple walk animation.
-export function person({ shirt = 0x3366aa, pants = 0x333344, skin = 0xd9a77c, hair = 0x1a1a1a, hairStyle = "short", hat = null, glasses = false, mustache = false, height = 1, name = "" } = {}) {
-  const g = new THREE.Group();
-  if (hairStyle === "bald") hair = skin;
-  const legL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.8, 0.2), mat(pants));
-  const legR = legL.clone();
-  legL.position.set(-0.11, 0.4, 0); legR.position.set(0.11, 0.4, 0);
-  legL.geometry.translate(0, -0.4, 0); legL.position.y = 0.8; legR.position.y = 0.8;
-  const body = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.65, 0.28), mat(shirt));
-  body.position.y = 1.12;
-  const armL = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.6, 0.16), mat(shirt));
-  armL.geometry.translate(0, -0.3, 0);
-  const armR = armL.clone();
-  armL.position.set(-0.33, 1.42, 0); armR.position.set(0.33, 1.42, 0);
-  const head = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.34, 0.3), mat(skin));
-  head.position.y = 1.62;
-  const hairM = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.1, 0.32), mat(hair));
-  hairM.position.y = 1.82;
-  g.add(legL, legR, body, armL, armR, head, hairM);
-  if (hairStyle === "long") {
-    const back = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.45, 0.08), mat(hair));
-    back.position.set(0, 1.58, -0.17); g.add(back);
+// Original face artwork, shared by NPCs rather than allocating a texture per person.
+let faceMaterial;
+function cartoonFace() {
+  if (faceMaterial) return faceMaterial;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = 256;
+  const c = canvas.getContext("2d");
+  c.fillStyle = "#29232a";
+  for (const x of [78, 178]) {
+    c.beginPath(); c.ellipse(x, 108, 12, 17, 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = "#fff5e6";
+    c.beginPath(); c.arc(x - 3, 103, 4, 0, Math.PI * 2); c.fill();
+    c.fillStyle = "#29232a";
   }
-  if (mustache) {
-    const mu = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.04, 0.02), mat(hair));
-    mu.position.set(0, 1.55, 0.155); g.add(mu);
+  c.strokeStyle = "#734c3c"; c.lineWidth = 5; c.lineCap = "round";
+  c.beginPath(); c.moveTo(126, 133); c.lineTo(122, 145); c.lineTo(133, 145); c.stroke();
+  c.strokeStyle = "#513534"; c.lineWidth = 7;
+  c.beginPath(); c.moveTo(96, 175); c.quadraticCurveTo(128, 194, 160, 172); c.stroke();
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  faceMaterial = new THREE.MeshLambertMaterial({ map: texture, transparent: true, depthWrite: false, flatShading: true });
+  return faceMaterial;
+}
+
+// Six-part block rig. All accessories follow the head; limbs pivot at hips/shoulders.
+export function person({ shirt = 0x3366aa, pants = 0x333344, skin = 0xd9a77c, hair = 0x1a1a1a, hairStyle = "short", hat = null, glasses = false, mustache = false, scar = false, height = 1, name = "" } = {}) {
+  const g = new THREE.Group();
+  const block = (parent, w, h, d, color, x, y, z = 0) => {
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color));
+    mesh.position.set(x, y, z);
+    parent.add(mesh);
+    return mesh;
+  };
+  const limb = (w, h, d, color, x, y) => {
+    const mesh = block(g, w, h, d, color, x, y);
+    mesh.geometry.translate(0, -h / 2, 0);
+    return mesh;
+  };
+  const legL = limb(0.35, 0.61, 0.38, pants, -0.185, 0.61);
+  const legR = limb(0.35, 0.61, 0.38, pants, 0.185, 0.61);
+  block(g, 0.72, 0.60, 0.38, shirt, 0, 0.93);
+  const armL = limb(0.34, 0.60, 0.38, shirt, -0.55, 1.23);
+  const armR = limb(0.34, 0.60, 0.38, shirt, 0.55, 1.23);
+  for (const arm of [armL, armR]) {
+    // A skin-coloured end cap reads as a hand without introducing another joint.
+    block(arm, 0.342, 0.164, 0.382, skin, 0, -0.52);
+  }
+  const head = block(g, 0.50, 0.48, 0.48, skin, 0, 1.49);
+  const face = new THREE.Mesh(new THREE.PlaneGeometry(0.48, 0.46), cartoonFace());
+  face.position.z = 0.242;
+  head.add(face);
+  if (hairStyle !== "bald") {
+    block(head, 0.54, 0.08, 0.52, hair, 0, 0.25, -0.01);
+    block(head, 0.54, 0.10, 0.10, hair, 0, 0.17, -0.23);
+    if (hairStyle === "long") {
+      block(head, 0.54, 0.45, 0.12, hair, 0, -0.015, -0.25);
+      for (const x of [-0.255, 0.255]) block(head, 0.07, 0.35, 0.34, hair, x, -0.015, -0.06);
+    }
   }
   if (hat) {
-    const h = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.22, 0.12, 8), mat(hat));
-    h.position.y = 1.9; g.add(h);
+    block(head, 0.57, 0.13, 0.55, hat, 0, 0.275);
+    block(head, 0.60, 0.04, 0.25, hat, 0, 0.20, 0.245);
   }
   if (glasses) {
-    const gl = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.06, 0.02), mat(0x111111));
-    gl.position.set(0, 1.66, 0.16); g.add(gl);
+    for (const x of [-0.095, 0.095]) {
+      for (const y of [0.005, 0.10]) block(head, 0.16, 0.018, 0.025, 0x252733, x, y, 0.262);
+      for (const edge of [-0.071, 0.071]) block(head, 0.018, 0.095, 0.025, 0x252733, x + edge, 0.0525, 0.262);
+    }
+    block(head, 0.04, 0.018, 0.025, 0x252733, 0, 0.06, 0.262);
+    for (const x of [-0.245, 0.245]) block(head, 0.018, 0.018, 0.25, 0x252733, x, 0.07, 0.13);
   }
-  const eyes = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.04, 0.02), mat(0x111111));
-  eyes.position.set(0, 1.64, 0.155); g.add(eyes);
+  if (mustache) {
+    for (const x of [-0.046, 0.046]) {
+      const half = block(head, 0.10, 0.035, 0.035, hair, x, -0.065, 0.265);
+      half.rotation.z = Math.sign(x) * -0.16;
+    }
+  }
+  if (scar) {
+    const mark = block(head, 0.014, 0.11, 0.008, 0x995b50, 0.17, -0.035, 0.246);
+    mark.rotation.z = -0.35;
+    for (const y of [-0.025, 0, 0.025]) block(mark, 0.04, 0.008, 0.009, 0x995b50, 0, y);
+  }
   g.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+  // Transparent face artwork must not cast a square shadow over the skin.
+  face.castShadow = false;
   g.scale.setScalar(height);
   g.userData = { parts: { legL, legR, armL, armR }, walk: 0, name };
   add(g);
@@ -198,8 +245,9 @@ export function person({ shirt = 0x3366aa, pants = 0x333344, skin = 0xd9a77c, ha
 
 export function animateWalk(p, speed, dt) {
   const u = p.userData;
-  u.walk += speed * dt * 3;
-  const s = speed > 0.05 ? Math.sin(u.walk) * 0.6 : 0;
+  const moving = Math.abs(speed) > 0.05;
+  u.walk = moving ? u.walk + speed * dt * 4 : 0;
+  const s = moving ? Math.sin(u.walk) * 0.8 : 0;
   u.parts.legL.rotation.x = s; u.parts.legR.rotation.x = -s;
   u.parts.armL.rotation.x = -s; u.parts.armR.rotation.x = s;
 }

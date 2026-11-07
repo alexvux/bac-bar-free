@@ -1,6 +1,8 @@
 # Trạng thái
 
-Nhánh: `game/five-shifts` · PR: https://github.com/alexvux/bac-bar-free/pull/1
+Nhánh đang làm: `game/roblox-characters` · Chưa merge vào `main`.
+
+PR nền tảng đã hoàn tất: https://github.com/alexvux/bac-bar-free/pull/1
 
 ## Đã xong
 - [x] 01 Khung dự án: Bun + Three.js, README tiếng Việt, thư mục tiến độ
@@ -14,6 +16,7 @@ Nhánh: `game/five-shifts` · PR: https://github.com/alexvux/bac-bar-free/pull/1
 - [x] 09 Âm thanh, hoàn thiện, điện thoại
 - [x] 10 Tự chơi thử từ đầu đến cuối, chụp màn hình (cả 3 kết thúc)
 - [x] 11 Deploy GitHub Pages (PR #2 đã merge; source: GitHub Actions)
+- [x] 12 Nhân vật khối kiểu R6: đầu lớn, tay chân dày, mặt tự vẽ, phụ kiện và bước đi mới (xong trên nhánh; chờ PR/review)
 
 ## Đã lên GitHub
 - [x] Đẩy nhánh `game/five-shifts` và mở PR #1
