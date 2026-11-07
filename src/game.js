@@ -1,6 +1,6 @@
 // Game runtime: frame loop, shift sequencing, and the `ctx` API that shift scripts await on.
 import * as THREE from "three";
-import { renderer, scene, camera, clearLevel, add, person, animateWalk, mat, colliders } from "./engine.js";
+import { renderer, scene, camera, clearLevel, add, person, animateWalk, mat, colliders, collide } from "./engine.js";
 import { input, requestLock } from "./input.js";
 import { player, placePlayer, updatePlayer, distTo, angleTo } from "./player.js";
 import * as ui from "./ui.js";
@@ -61,8 +61,24 @@ export const ctx = {
     return new Promise((resolve) => state.npcs.push({ mesh, path: [[x, z]], speed, resolve }));
   },
   faceBoth(mesh) {
-    mesh.rotation.y = Math.atan2(player.x - mesh.position.x, player.z - mesh.position.z);
-    player.yaw = Math.atan2(-(mesh.position.x - player.x), -(mesh.position.z - player.z));
+    const mx = mesh.position.x, mz = mesh.position.z;
+    let dx = player.x - mx, dz = player.z - mz;
+    let dist = Math.hypot(dx, dz);
+    // Chunky R6 heads fill the view if you stand inside them; step back to talk.
+    const stand = 2.45 * (mesh.scale.y || 1);
+    let nx, nz;
+    if (dist > 0.08) { nx = dx / dist; nz = dz / dist; }
+    else { nx = Math.sin(player.yaw); nz = Math.cos(player.yaw); }
+    if (dist < stand) {
+      [player.x, player.z] = collide(mx + nx * stand, mz + nz * stand, player.radius);
+    }
+    mesh.rotation.y = Math.atan2(player.x - mx, player.z - mz);
+    player.yaw = Math.atan2(-(mx - player.x), -(mz - player.z));
+    player.pitch = 0;
+    camera.position.set(player.x, 1.62, player.z);
+    camera.rotation.order = "YXZ";
+    camera.rotation.y = player.yaw;
+    camera.rotation.x = 0;
   },
   onUpdate(fn) { state.updaters.push(fn); },
   /* Chase: the runner follows `path`, then loops from index `loopFrom`. Catch them within `time` seconds.

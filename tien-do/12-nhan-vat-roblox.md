@@ -7,7 +7,7 @@ Hoàn tất trên nhánh `game/roblox-characters`; chưa merge/deploy.
 - Mặt tự vẽ bằng canvas: mắt có điểm sáng, mũi và miệng cong nhẹ; dùng chung texture, không dùng logo hay decal Roblox.
 - Tóc ngắn/dài, đầu trọc, mũ khối, gọng kính rỗng và ria mép khớp đầu mới; bổ sung sẹo của Hùng vốn chưa được dựng.
 - Tay áo cùng màu áo, bàn tay màu da. Đi vung tay/chân đối nhau rõ hơn; dừng là trả về tư thế đứng.
-- Giữ nguyên các tùy chọn và `userData.parts`; không sửa camera góc nhìn thứ nhất, điều khiển, va chạm, đường đi, hội thoại hay kiểm tra giấy tờ. Bản sửa z-fight đã có sẵn trên `origin/main`, không thêm sửa sàn trong nhánh này.
+- Giữ nguyên các tùy chọn và `userData.parts`; không đổi góc nhìn thứ nhất, điều khiển, va chạm, đường đi hay kiểm tra giấy tờ. `faceBoth` lùi người chơi ra khoảng 2,45 m (nhân với scale, ví dụ Minh gần hơn) để đầu khối không chiếm hết màn hình khi nói chuyện. Bản sửa z-fight đã có sẵn trên `origin/main`, không thêm sửa sàn trong nhánh này.
 
 ## Kiểm tra
 
